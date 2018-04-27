@@ -471,6 +471,14 @@ cdef class Line:
                 self._bboxes.append(last_bbox)
                 w.getColor(&r, &g, &b)
                 font_name=w.getFontName(i)
+                try:
+                    font_name = w.getFontName(i).getCString().decode('UTF-8')
+                except:
+                    font_name = 'unfound'
+                last_font=FontInfo(font_name,
+                                   w.getFontSize(),
+                                   Color(r,g,b)
+                                   )
                 last_font=FontInfo(font_name.getCString().decode('UTF-8', 'replace') if <unsigned long>font_name != 0 else u"unknown", # In rare cases font name is not UTF-8 or font name is NULL
                                    w.getFontSize(),
                                    Color(r,g,b)
